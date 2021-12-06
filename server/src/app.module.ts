@@ -15,10 +15,8 @@ import { Task } from './tasks/entity/tasks.entity';
       ssl: { rejectUnauthorized: false },
       entities: [Task],
       retryAttempts: 1,
-      // no usar en produccion
-      synchronize: true,
-      dropSchema: true,
-      // no usar en produccion
+      // synchronize: true,
+      // dropSchema: true
     }),
     TasksModule,
   ],
