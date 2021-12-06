@@ -3,6 +3,8 @@ import { TasksDTO } from '../dto/tasks.dto';
 import { ITasksController } from './tasks.interface';
 import { ITASKS_SERVICE } from '../service/tasks.interface';
 import { ITasksService } from '../service/tasks.interface';
+import { dtoToEntity } from '../mapper/dto.to.entity';
+import { Task } from '../entity/tasks.entity';
 
 @Controller('tasks')
 export class TasksController implements ITasksController {
@@ -21,7 +23,8 @@ export class TasksController implements ITasksController {
   }
 
   @Post('/new')
-  createTask(@Body() body: TasksDTO): TasksDTO[] {
-    return this.tasksService.createTask(body);
+  createTask(@Body() body: TasksDTO): Promise<Task> {
+    const task = dtoToEntity(body);
+    return this.tasksService.createTask(task);
   }
 }

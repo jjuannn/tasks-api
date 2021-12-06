@@ -4,6 +4,7 @@ import { ITasksService } from './tasks.interface';
 import { NotFoundException } from '@nestjs/common';
 import { ITASKS_REPOSTORY } from '../repository/tasks.interface';
 import { ITasksRepository } from '../repository/tasks.interface';
+import { Task } from '../entity/tasks.entity';
 
 @Injectable()
 export class TasksService implements ITasksService {
@@ -63,8 +64,7 @@ export class TasksService implements ITasksService {
     return task;
   }
 
-  createTask(task: TasksDTO): TasksDTO[] {
-    this.tasks = [...this.tasks, task];
-    return this.tasks;
+  createTask(task: Task): Promise<Task> {
+    return this.tasksRepository.createTask(task);
   }
 }

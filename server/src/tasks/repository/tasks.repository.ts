@@ -16,11 +16,9 @@ export class TasksRepository implements ITasksRepository {
     const tasks = await this.tasksRepository.query('SELECT * FROM tasks');
     return tasks;
   }
+
+  async createTask(task: Task): Promise<Task> {
+    const savedTask = await this.tasksRepository.save(task);
+    return savedTask;
+  }
 }
-// SOLUCIONAR EL PROBLEMA DE LOS TABLE NAMES
-/*
- *
- * @amhed if you still have problem, try clear the dist folder,
- * sometime the file there get stuck and not updated even though you have updated ts file.
- * I wasted 1 hour to realize that
- */
