@@ -2,9 +2,9 @@ import { TasksDTO } from '../dto/tasks.dto';
 import { Task } from '../entity/tasks.entity';
 
 export interface ITasksController {
-  getAllTasks(): Promise<TasksDTO[]>;
-  getTask(id: string): TasksDTO;
+  getAllTasks(): Promise<Task[]>;
+  getTask(id: string): Promise<Task>;
   createTask(body: TasksDTO): Promise<Task>;
-  //   deleteTask(): boolean;
-  //   updateTask(): boolean;
+  deleteTask(id: string): Promise<Task[]>;
+  updateTask(body: TasksDTO, id: string): Promise<Task>;
 }

@@ -13,12 +13,12 @@ export class TasksController implements ITasksController {
   ) {}
 
   @Get('/all')
-  getAllTasks(): Promise<TasksDTO[]> {
+  getAllTasks(): Promise<Task[]> {
     return this.tasksService.getAllTasks();
   }
 
   @Get('/:id')
-  getTask(@Param('id') id: string): TasksDTO {
+  getTask(@Param('id') id: string): Promise<Task> {
     return this.tasksService.getTask(Number(id));
   }
 
@@ -26,5 +26,16 @@ export class TasksController implements ITasksController {
   createTask(@Body() body: TasksDTO): Promise<Task> {
     const task = dtoToEntity(body);
     return this.tasksService.createTask(task);
+  }
+
+  @Post('/edit/:id')
+  updateTask(@Body() body: TasksDTO, @Param('id') id: string): Promise<Task> {
+    const task = dtoToEntity(body);
+    return this.tasksService.updateTask(task, Number(id));
+  }
+
+  @Get('/delete/:id')
+  deleteTask(@Param('id') id: string): Promise<Task[]> {
+    return this.tasksService.deleteTask(Number(id));
   }
 }
