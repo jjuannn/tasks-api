@@ -1,0 +1,259 @@
+{
+	"info": {
+		"_postman_id": "d4faa3d5-58e5-46b3-ac22-8e8508fdc571",
+		"name": "Tasks API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get tasks list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/tasks/all",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"tasks",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get task by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/tasks/view/1",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"tasks",
+						"view",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get task by id with error",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/tasks/view/110940914",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"tasks",
+						"view",
+						"110940914"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"This is the post title\",\r\n    \"description\": \"This is the post description\",\r\n    \"hasHighPriority\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{{{BASE}}}}/tasks/new",
+					"host": [
+						"{{{{BASE}}}}"
+					],
+					"path": [
+						"tasks",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create task with error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"This is the post description\",\r\n    \"hasHighPriority\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE}}/tasks/new",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"tasks",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Hello World!\",\r\n    \"description\": \"Esta es la descripcion del post\",\r\n    \"hasHighPriority\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE}}/tasks/edit/1",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"tasks",
+						"edit",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update task with error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Hello World!\",\r\n    \"description\": \"Esta es la descripcion del post\",\r\n    \"hasHighPriority\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE}}/tasks/edit/13131",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"tasks",
+						"edit",
+						"13131"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get task by title",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/tasks/view/title/hello%20wor",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"tasks",
+						"view",
+						"title",
+						"hello%20wor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get task by title with error",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/tasks/view/title/aslkdasldksaldkmxlokaslxdkasldksaldas",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"tasks",
+						"view",
+						"title",
+						"aslkdasldksaldkmxlokaslxdkasldksaldas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete task",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/tasks/delete/1",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"tasks",
+						"delete",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete task with error",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/tasks/delete/11313131",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"tasks",
+						"delete",
+						"11313131"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE",
+			"value": "http://localhost:8080"
+		}
+	]
+}
