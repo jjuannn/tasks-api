@@ -21,6 +21,14 @@ export class TasksService implements ITasksService {
     return task;
   }
 
+  async getByTitle(title: string): Promise<Task[]> {
+    return this.tasksRepository.getByTitle(title.toLowerCase());
+  }
+
+  async getByPriority(priority: string): Promise<Task[]> {
+    return this.tasksRepository.getByPriority(priority.toLowerCase());
+  }
+
   async createTask(task: Task): Promise<Task> {
     return this.tasksRepository.createTask(task);
   }
@@ -31,7 +39,7 @@ export class TasksService implements ITasksService {
     return this.tasksRepository.updateTask(task);
   }
 
-  async deleteTask(id: number): Promise<Task[]> {
+  async deleteTask(id: number): Promise<Object> {
     return this.tasksRepository.deleteTask(id);
   }
 }
