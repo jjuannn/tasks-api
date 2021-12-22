@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { TasksDTO } from '../dto/tasks.dto';
 import { ITasksController } from './tasks.interface';
 import { ITASKS_SERVICE } from '../service/tasks.interface';
@@ -17,9 +25,19 @@ export class TasksController implements ITasksController {
     return this.tasksService.getAllTasks();
   }
 
-  @Get('/:id')
+  @Get('/view/:id')
   getTask(@Param('id') id: string): Promise<Task> {
     return this.tasksService.getTask(Number(id));
+  }
+
+  @Get('/view/title/:title')
+  getByTitle(@Param('title') title: string): Promise<Task[]> {
+    return this.tasksService.getByTitle(title);
+  }
+
+  @Get('/view/priority/:priority')
+  getByPriority(@Param('priority') priority: string) {
+    return this.tasksService.getByPriority(priority);
   }
 
   @Post('/new')
@@ -34,8 +52,8 @@ export class TasksController implements ITasksController {
     return this.tasksService.updateTask(task, Number(id));
   }
 
-  @Get('/delete/:id')
-  deleteTask(@Param('id') id: string): Promise<Task[]> {
+  @Delete('/delete/:id')
+  deleteTask(@Param('id') id: string): Promise<Object> {
     return this.tasksService.deleteTask(Number(id));
   }
 }
