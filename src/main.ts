@@ -1,4 +1,5 @@
 if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const config = require('dotenv').config();
   if (config.error) {
     throw config.error;
