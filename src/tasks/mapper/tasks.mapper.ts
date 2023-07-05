@@ -9,7 +9,7 @@ export class TasksMapper {
     description,
     priority,
   }: UpdateTaskDTO): UpdateTask {
-    return new UpdateTask(Number(id), title, description, priority);
+    return new UpdateTask(id, title, description, priority);
   }
 
   static fromCreateDTOToCreateEntity({
