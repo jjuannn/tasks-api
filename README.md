@@ -20,7 +20,7 @@ This application was made with:
 - 🟩GET `/tasks/all` - returns a list with all the tasks.
 - 🟩GET `/tasks/view/:id` - return the task with the id specified.
 - 🟩GET `/tasks/view/title/:title` - returns an array with the tasks containing the parameter in the title.
-- 🟫POST `/tasks/new` - creates a new task. `title`, `description` and `hasHighPriority` must be sent in the request body.
+- 🟫POST `/tasks/new` - creates a new task. `title`, `description` and `priority` must be sent in the request body.
 - 🟫POST `tasks/edit/:id` - edit an existing task. New values must be sent in the request body.
 - 🟥DELETE `/tasks/delete/:id` - deletes a task with the id specified.
 
