@@ -13,7 +13,7 @@ This application was made with:
 
 ## Deployments:
 
-- TBD
+- https://tasks-api-nnmu.onrender.com/
 
 ## Endpoints:
 
