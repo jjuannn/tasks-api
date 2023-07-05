@@ -7,12 +7,14 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
-import { TasksDTO } from '../dto/tasks.dto';
 import { ITasksController } from './tasks.interface';
 import { ITASKS_SERVICE } from '../service/tasks.interface';
 import { ITasksService } from '../service/tasks.interface';
-import { dtoToEntity } from '../mapper/dto.to.entity';
 import { Task } from '../entity/tasks.entity';
+import { CreateTaskDTO } from '../dto/create-task-dto';
+import { UpdateTaskDTO } from '../dto/update-task.dto';
+import { TasksMapper } from '../mapper/tasks.mapper';
+import { PriorityTypes } from '../enum/priority.enum';
 
 @Controller('tasks')
 export class TasksController implements ITasksController {
@@ -36,24 +38,24 @@ export class TasksController implements ITasksController {
   }
 
   @Get('/view/priority/:priority')
-  getByPriority(@Param('priority') priority: string) {
+  getByPriority(@Param('priority') priority: PriorityTypes) {
     return this.tasksService.getByPriority(priority);
   }
 
   @Post('/new')
-  createTask(@Body() body: TasksDTO): Promise<Task> {
-    const task = dtoToEntity(body);
+  createTask(@Body() body: CreateTaskDTO): Promise<Task> {
+    const task = TasksMapper.fromCreateDTOToCreateEntity(body);
     return this.tasksService.createTask(task);
   }
 
-  @Post('/edit/:id')
-  updateTask(@Body() body: TasksDTO, @Param('id') id: string): Promise<Task> {
-    const task = dtoToEntity(body);
-    return this.tasksService.updateTask(task, Number(id));
+  @Post('/edit')
+  updateTask(@Body() body: UpdateTaskDTO): Promise<Task> {
+    const task = TasksMapper.fromUpdateDTOToUpdateEntity(body);
+    return this.tasksService.updateTask(task);
   }
 
   @Delete('/delete/:id')
-  deleteTask(@Param('id') id: string): Promise<Object> {
+  deleteTask(@Param('id') id: string): Promise<{ success: boolean }> {
     return this.tasksService.deleteTask(Number(id));
   }
 }

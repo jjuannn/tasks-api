@@ -3,6 +3,9 @@ import { ITasksService } from './tasks.interface';
 import { ITASKS_REPOSTORY } from '../repository/tasks.interface';
 import { ITasksRepository } from '../repository/tasks.interface';
 import { Task } from '../entity/tasks.entity';
+import { UpdateTask } from '../entity/domain/update-task.entity';
+import { CreateTask } from '../entity/domain/create-task.entity';
+import { PriorityTypes } from '../enum/priority.enum';
 
 @Injectable()
 export class TasksService implements ITasksService {
@@ -25,21 +28,19 @@ export class TasksService implements ITasksService {
     return this.tasksRepository.getByTitle(title.toLowerCase());
   }
 
-  async getByPriority(priority: string): Promise<Task[]> {
+  async getByPriority(priority: PriorityTypes): Promise<Task[]> {
     return this.tasksRepository.getByPriority(priority.toLowerCase());
   }
 
-  async createTask(task: Task): Promise<Task> {
+  async createTask(task: CreateTask): Promise<Task> {
     return this.tasksRepository.createTask(task);
   }
 
-  async updateTask(task: Task, id: number): Promise<Task> {
-    const updateTask = task;
-    updateTask.id = id;
+  async updateTask(task: UpdateTask): Promise<Task> {
     return this.tasksRepository.updateTask(task);
   }
 
-  async deleteTask(id: number): Promise<Object> {
+  async deleteTask(id: number): Promise<{ success: boolean }> {
     return this.tasksRepository.deleteTask(id);
   }
 }
