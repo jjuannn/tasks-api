@@ -29,7 +29,7 @@ export class TasksService implements ITasksService {
   }
 
   async getByPriority(priority: PriorityTypes): Promise<Task[]> {
-    return this.tasksRepository.getByPriority(priority.toLowerCase());
+    return this.tasksRepository.getByPriority(priority);
   }
 
   async createTask(task: CreateTask): Promise<Task> {
