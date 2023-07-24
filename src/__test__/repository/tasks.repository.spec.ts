@@ -120,25 +120,38 @@ describe('Task Repository Unit Testing', () => {
   });
 
   it('Should call update repository methods if can find a task with the specified id', async () => {
+    const queryBuilderMethodsMock = {
+      select: jest.fn().mockReturnThis(),
+      update: jest.fn().mockReturnThis(),
+      set: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      setParameter: jest.fn().mockReturnThis(),
+      execute: jest.fn().mockImplementation(() => ({ affected: 1 })),
+    };
+
     jest
       .spyOn(tasksRepository, 'getTask')
       .mockImplementation(() => Promise.resolve(databaseTask));
 
     mockTasksRepository.createQueryBuilder.mockImplementation(
-      jest.fn(() => ({
-        select: jest.fn().mockReturnThis(),
-        update: jest.fn().mockReturnThis(),
-        set: jest.fn().mockReturnThis(),
-        where: jest.fn().mockReturnThis(),
-        setParameter: jest.fn().mockReturnThis(),
-        execute: jest.fn().mockImplementation(() => ({ affected: 1 })),
-      })),
+      jest.fn(() => queryBuilderMethodsMock),
     );
 
     const updated = await tasksRepository.updateTask(updateTaskMock);
 
     expect(updated).toEqual(databaseTask);
     expect(mockTasksRepository.createQueryBuilder).toHaveBeenCalledTimes(1);
+    expect(queryBuilderMethodsMock.set).toHaveBeenCalledWith({
+      title: updateTaskMock.title,
+      description: updateTaskMock.description,
+      priority: updateTaskMock.priority,
+    });
+    expect(queryBuilderMethodsMock.where).toHaveBeenCalledWith('id=:id');
+    expect(queryBuilderMethodsMock.setParameter).toHaveBeenCalledWith(
+      'id',
+      updateTaskMock.id,
+    );
+
     expect(tasksRepository.getTask).toHaveBeenCalledTimes(2);
     expect(tasksRepository.getTask).toHaveBeenNthCalledWith(1, databaseTask.id);
     expect(tasksRepository.getTask).toHaveBeenNthCalledWith(2, databaseTask.id);
@@ -188,5 +201,30 @@ describe('Task Repository Unit Testing', () => {
 
     expect(deleted).toEqual({ success: true });
     expect(mockTasksRepository.delete).toHaveBeenCalledWith({ id: taskId });
+  });
+
+  it('Should get task by title', async () => {
+    const queryBuilderMethodsMock = {
+      select: jest.fn().mockReturnThis(),
+      update: jest.fn().mockReturnThis(),
+      set: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      setParameter: jest.fn().mockReturnThis(),
+      execute: jest.fn().mockImplementation(() => [databaseTask]),
+    };
+
+    mockTasksRepository.createQueryBuilder.mockImplementation(
+      jest.fn(() => queryBuilderMethodsMock),
+    );
+
+    const title = 'Title';
+
+    const tasks = await tasksRepository.getByTitle(title);
+
+    expect(mockTasksRepository.createQueryBuilder).toHaveBeenCalledTimes(1);
+    expect(tasks).toEqual([databaseTask]);
+    expect(queryBuilderMethodsMock.where).toHaveBeenCalledWith(
+      `LOWER(title) LIKE '${title}%'`,
+    );
   });
 });
