@@ -15,7 +15,6 @@ export class TasksService implements ITasksService {
 
   async getAllTasks(): Promise<Task[]> {
     const tasks = await this.tasksRepository.getAllTasks();
-
     return tasks;
   }
 

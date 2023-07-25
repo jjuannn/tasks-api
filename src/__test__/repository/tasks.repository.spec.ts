@@ -1,14 +1,13 @@
 import { NotFoundException } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
 import { Task } from '../../tasks/entity/tasks.entity';
-import { CreateTask } from '../../tasks/entity/domain/create-task.entity';
-import { UpdateTask } from '../../tasks/entity/domain/update-task.entity';
 import { TasksRepository } from '../../tasks/repository/tasks.repository';
 import { MockType, createTestingModule } from '../mock';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ITASKS_REPOSTORY } from '../../tasks/repository/tasks.interface';
 import { PriorityTypes } from '../../tasks/enum/priority.enum';
+import { createTaskMock, databaseTask, updateTaskMock } from '../mock-entities';
 
 describe('Task Repository Unit Testing', () => {
   let tasksRepository: TasksRepository;
@@ -20,26 +19,6 @@ describe('Task Repository Unit Testing', () => {
     tasksRepository = module.get<TasksRepository>(ITASKS_REPOSTORY);
     mockTasksRepository = module.get(getRepositoryToken(Task));
   });
-
-  const createTaskMock = new CreateTask(
-    'Task Title',
-    'Task Description',
-    PriorityTypes.MEDIUM,
-  );
-
-  const updateTaskMock = new UpdateTask(
-    1,
-    'Updated Title',
-    'Updated Description',
-    PriorityTypes.MEDIUM,
-  );
-
-  const databaseTask: Task = {
-    id: 1,
-    title: 'Task Title',
-    description: 'Task Description',
-    priority: PriorityTypes.MEDIUM,
-  };
 
   it('Should instance repository correctly', () => {
     expect(tasksRepository).toBeDefined();
