@@ -5,7 +5,6 @@ import { Task } from '../entity/tasks.entity';
 import { ITasksRepository } from './tasks.interface';
 import { UpdateTask } from '../entity/domain/update-task.entity';
 import { CreateTask } from '../entity/domain/create-task.entity';
-import { PriorityTypes } from '../enum/priority.enum';
 
 @Injectable()
 export class TasksRepository implements ITasksRepository {
@@ -32,14 +31,16 @@ export class TasksRepository implements ITasksRepository {
   }
 
   async getByTitle(title: string): Promise<Task[]> {
-    const task = await this.tasksRepository.query(
-      `SELECT * FROM tasks WHERE LOWER(title) LIKE '%${title}%'`,
-    );
+    const tasks = await this.tasksRepository
+      .createQueryBuilder()
+      .select()
+      .where(`LOWER(title) LIKE '${title}%'`)
+      .execute();
 
-    return task;
+    return tasks;
   }
 
-  async getByPriority(priority: PriorityTypes): Promise<Task[]> {
+  async getByPriority(priority: string): Promise<Task[]> {
     const task = await this.tasksRepository.find({
       where: { priority },
     });
