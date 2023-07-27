@@ -3,7 +3,7 @@ import { TasksService } from '../../tasks/service/tasks.service';
 import { ITASKS_REPOSTORY } from '../../tasks/repository/tasks.interface';
 import { createTestingModule } from '../mock';
 import { TestingModule } from '@nestjs/testing';
-import { createTaskMock, databaseTask } from '../mock-entities';
+import { createTaskMock, databaseTask, updateTaskMock } from '../mock-entities';
 import { PriorityTypes } from '../../tasks/enum/priority.enum';
 
 describe('Task Service Unit Testing', () => {
@@ -74,9 +74,33 @@ describe('Task Service Unit Testing', () => {
       .spyOn(tasksRepository, 'createTask')
       .mockImplementationOnce(() => Promise.resolve(databaseTask));
 
-    const tasks = await tasksService.createTask(createTaskMock);
+    const task = await tasksService.createTask(createTaskMock);
 
     expect(tasksRepository.createTask).toHaveBeenCalledWith(createTaskMock);
-    expect(tasks).toEqual(databaseTask);
+    expect(task).toEqual(databaseTask);
+  });
+
+  it('updateTask should call repository correctly', async () => {
+    jest
+      .spyOn(tasksRepository, 'updateTask')
+      .mockImplementationOnce(() => Promise.resolve(databaseTask));
+
+    const task = await tasksService.updateTask(updateTaskMock);
+
+    expect(tasksRepository.updateTask).toHaveBeenCalledWith(updateTaskMock);
+    expect(task).toEqual(databaseTask);
+  });
+
+  it('deleteTask should call repository correctly', async () => {
+    jest
+      .spyOn(tasksRepository, 'deleteTask')
+      .mockImplementationOnce(() => Promise.resolve({ success: true }));
+
+    const taskId = 1;
+
+    const taskDeleted = await tasksService.deleteTask(taskId);
+
+    expect(tasksRepository.deleteTask).toHaveBeenCalledWith(taskId);
+    expect(taskDeleted).toEqual({ success: true });
   });
 });
