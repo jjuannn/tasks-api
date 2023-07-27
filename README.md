@@ -10,6 +10,7 @@ This application was made with:
 - 💥 TypeORM - a powerful ORM.
 - 🐘 MySQL for the database where the data is stored.
 - 🟦 TypeScript for the static type definitions.
+- 🃏 Jest for API Modules unit testing
 
 ## Deployments:
 
